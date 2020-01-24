@@ -13,3 +13,12 @@
   color: gray;
 }
 
+.Checkbox {
+  display: flex;
+  flex-direction: column;
+  margin: 5%;
+}
+
+.Butt {
+  margin-bottom: 10%;
+}
