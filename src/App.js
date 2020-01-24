@@ -1,25 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {BrowserRouter as Router, Route, Switch, Redirect, Link} from 'react-router-dom';
+
+import Login from './pages/login';
+import Cadastro from './pages/cadastro';
+import Home from './pages/home';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
+          
+          <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"></script>
+
+          <link href="https://fonts.googleapis.com/css?family=Flamenco&display=swap" rel="stylesheet" />
+
+          <Switch>
+            <Route exact path="/" component={Login} />
+            <Route exact path="/cadastro" component={Cadastro} />
+            <Route exact path="/home" component={Home} />
+          </Switch>
+
+        </header>
+      </div>
+    </Router>
   );
 }
 
