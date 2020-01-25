@@ -6,19 +6,16 @@ import "firebase/database";
 import withFirebaseAuth from 'react-with-firebase-auth';
 import firebaseConfig from '../firebaseConfig/firebaseConfig'
 
-import {BrowserRouter as Router, Route, Redirect, Link, useHistory} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 
-// import Cadastro from '../pages/cadastro'
 import Input from '../components/input';
 import Button from '../components/button';
-import A from '../components/a';
-// import { userInfo } from 'os';
-// import Title from '../components/title';
+import Anchor from '../components/anchor';
+import Logo from '../components/logo';
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-const firebaseAppAuth = firebase.auth();
-const database = firebase.database();
-// const history = useHistory();
+const firebaseAppAuth = firebaseApp.auth();
+const database = firebaseApp.database();
 
 class Login extends React.Component {
     constructor(props){
@@ -35,38 +32,36 @@ class Login extends React.Component {
         this.setState(newState);
     }
 
-    handleClick = () => {
-        const infos = {
-            email: this.state.email,
-            senha: this.state.senha
-        }
-        this.loginUser();
-    }
-    
     loginUser = () => {
-        this.props.signInWithEmailAndPassword(this.state.email,
-            this.state.senha)
+        this.props.signInWithEmailAndPassword(this.state.email, this.state.senha)
             .then((resp) => {
-                if(resp.code != 'auth/invalid-email'){
-                    this.props.history.push("/home")
+                if(resp.code !== 'auth/invalid-email'){
                     let userId = firebaseAppAuth.currentUser.uid;
                     database.ref('/users/' + userId).once('value')
-                        .then(function (snapshot) {
-                            let userEmail = (snapshot.val() && snapshot.val().email);
-                        })
+                    this.props.history.push("/home")
+                } else {
+                    alert('Coloque seu email e senha')
                 }
             })
+            .catch(error => {
+                alert('Usuário não cadastrado')
+                this.props.history.push('/')
+            })
+    }
+
+    Redirect = () => {
+        this.props.history.push('/cadastro')
     }
 
     render() {
         return (
             <Router>
                 <div className="login">
-                    {/* <Logo className="logo-bq" height="200px" width="auto" /> */}
-                    <Input getValue={(e) => this.handleChange((e), 'email')} typet="text" name="Email" />
-                    <Input getValue={(e) => this.handleChange((e), 'senha')} typet="password" name="Senha" />
-                    <Button style={{backgroundColor: "#69306D", fontWeight: 500}} onClick={this.handleClick} name="ENTRAR" />
-                    <Link to="/cadastro"><A style={{backgroundColor:"transparent", color: "#00695c", border: "none", boxShadow: "none", fontWeight: 700}} name="PRIMEIRO ACESSO? CADASTRE-SE" /></Link>
+                    <Logo />
+                    <Input getValue={(e) => this.handleChange((e), 'email')} type="text" name="Email" />
+                    <Input getValue={(e) => this.handleChange((e), 'senha')} type="password" name="Senha" />
+                    <Button onClick={this.loginUser} name="ENTRAR" />
+                    <Anchor style={{backgroundColor:"transparent", color: "#00695c", border: "none", boxShadow: "none", fontWeight: 700}} onClick={this.Redirect} name="PRIMEIRO ACESSO? CADASTRE-SE" />
                 </div>
             </Router>
         )

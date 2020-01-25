@@ -9,6 +9,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  font-family: 'Arimo', sans-serif;
   font-size: calc(10px + 2vmin);
   color: gray;
 }
@@ -21,4 +22,15 @@
 
 .Butt {
   margin-bottom: 10%;
+  font-weight: 800;
+}
+
+.Title {
+  color: rgb(90, 90, 90);
+}
+
+.LogOut {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
 }

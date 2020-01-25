@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import withFirebaseAuth from 'react-with-firebase-auth';
 
-import {BrowserRouter as Router, Route, Redirect, Link} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 
 import Input from '../components/input';
 import Button from '../components/button';
 import Checkbox from '../components/checkbox';
+import Logo from '../components/logo';
 
 const firebaseAppAuth = firebase.auth();
 const database = firebase.database();
@@ -29,7 +30,7 @@ class Home extends React.Component {
             const data = snapshot.val()
             const userId = firebaseAppAuth.currentUser.uid;
             const listItems = data[userId].list
-            if (listItems != undefined){
+            if (listItems !== undefined){
                 this.setState({listDB: listItems, items: listItems})
             }
         })
@@ -48,16 +49,24 @@ class Home extends React.Component {
 
     saveItem = () => {
         const userId = firebaseAppAuth.currentUser.uid;
-        console.log(this.state.items)
         database.ref(`users/${userId}`).update({list: this.state.items});
+    }
+
+    LogOut = () => {
+        firebaseAppAuth.signOut()
+            .then(() => {
+                this.props.history.push('/');
+            })
     }
 
     render() {
         return (
             <Router>
                 <div className="home">
+                    <Logo />
+                    <Button className="LogOut" onClick={this.LogOut} name="SAIR"></Button>
                     <Input getValue={(e) => this.handleChange((e), 'item')} typet="text" name="Adicione um item na lista" />
-                    <Button style={{backgroundColor: "#69306D", fontWeight: 500}} onClick={this.handleClick} name="ADICIONAR" />
+                    <Button onClick={this.handleClick} name="ADICIONAR" />
                     {this.state.listDB.map((item, index) => {
                         return (<Checkbox key={index} item={item}></Checkbox>)
                     })}

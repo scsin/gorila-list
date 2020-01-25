@@ -4,21 +4,16 @@ import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import withFirebaseAuth from 'react-with-firebase-auth';
-// import firebaseConfig from '../firebaseConfig/firebaseConfig'
 
-import {BrowserRouter as Router, Route, Redirect, Link, useHistory} from 'react-router-dom';
+import {BrowserRouter as Router} from 'react-router-dom';
 
-// import Logo from '../image';
-import BackButton from '../components/backbutton';
 import Input from '../components/input';
 import Button from '../components/button';
-import A from '../components/a';
-// import Title from '../components/title';
+import Anchor from '../components/anchor';
+import Logo from '../components/logo';
 
-// const firebaseApp = firebase.initializeApp(firebaseConfig);
 const firebaseAppAuth = firebase.auth();
 const database = firebase.database();
-
 
 class Cadastro extends React.Component {
     constructor(props){
@@ -27,6 +22,7 @@ class Cadastro extends React.Component {
             nome: "",
             email:"",
             senha: "",
+            list: [],
         }
     }
 
@@ -38,32 +34,39 @@ class Cadastro extends React.Component {
 
     handleClick = () => {
         const infos = {
+            nome: this.state.nome,
             email: this.state.email,
-            senha: this.state.senha
+            senha: this.state.senha,
+            list: this.state.list,
         }
         this.createUser(infos);
     }
-    
+
     createUser = (infos) => {
         firebaseAppAuth.createUserWithEmailAndPassword(this.state.email,
             this.state.senha)
             .then((resp) => {
+                this.props.history.push('/home')
                 if(resp){
                     database.ref('/users/' + resp.user.uid).set(infos);
                 }
             })
     }
 
+    Redirect = () => {
+        this.props.history.push('/');
+    }
+
     render() {
         return (
             <Router>
                 <div className="cadastro">
-                    {/* <Logo className="logo-bq" height="200px" width="auto" /> */}
-                    <Input getValue={(e) => this.handleChange((e), 'nome')} typet="text" name="Nome" />
-                    <Input getValue={(e) => this.handleChange((e), 'email')} typet="text" name="Email" />
-                    <Input getValue={(e) => this.handleChange((e), 'senha')} typet="password" name="Senha" />
-                    <Link to="/home"><Button style={{backgroundColor: "#69306D", fontWeight: 500}} onClick={this.handleClick} name="CADASTRAR" /></Link>
-                    <Link to="/"><Button style={{backgroundColor: "#69306D", fontWeight: 500}} onClick="/" name="CANCELAR" /></Link>
+                    <Logo />
+                    <Input getValue={(e) => this.handleChange((e), 'nome')} type="text" name="Nome" />
+                    <Input getValue={(e) => this.handleChange((e), 'email')} type="text" name="Email" />
+                    <Input getValue={(e) => this.handleChange((e), 'senha')} type="password" name="Senha" />
+                    <Button style={{backgroundColor: "#69306D", fontWeight: 500}} onClick={this.handleClick} name="CADASTRAR" />
+                    <Anchor style={{backgroundColor:"transparent", color: "#00695c", border: "none", boxShadow: "none", fontWeight: 700}} onClick={this.Redirect} name="CANCELAR" />
                 </div>
             </Router>
         )

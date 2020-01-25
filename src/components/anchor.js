@@ -1,6 +1,6 @@
 import React from 'react';
 
-function A(props) {
+function Anchor(props) {
     return (
         <div>
             <a style={props.style} className="waves-effect waves-light btn" onClick={props.onClick}>{props.name}</a>
@@ -8,4 +8,4 @@ function A(props) {
     )
 }
 
-export default A;
+export default Anchor;
