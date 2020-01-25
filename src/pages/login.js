@@ -61,7 +61,7 @@ class Login extends React.Component {
                     <Input getValue={(e) => this.handleChange((e), 'email')} type="text" name="Email" />
                     <Input getValue={(e) => this.handleChange((e), 'senha')} type="password" name="Senha" />
                     <Button onClick={this.loginUser} name="ENTRAR" />
-                    <Anchor style={{backgroundColor:"transparent", color: "#00695c", border: "none", boxShadow: "none", fontWeight: 700}} onClick={this.Redirect} name="PRIMEIRO ACESSO? CADASTRE-SE" />
+                    <Anchor onClick={this.Redirect} name="PRIMEIRO ACESSO? CADASTRE-SE" />
                 </div>
             </Router>
         )

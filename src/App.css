@@ -27,10 +27,17 @@
 
 .Title {
   color: rgb(90, 90, 90);
+  margin-bottom: calc(100px + 2vmin);
 }
 
 .LogOut {
   display: flex;
   flex-direction: row-reverse;
   align-items: flex-end;
+}
+
+.Trash {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
 }

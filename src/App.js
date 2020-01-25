@@ -8,6 +8,21 @@ import Home from './pages/home';
 
 function App() {
 
+  // const PrivateRoute = ({component: Component, ...rest}) => (
+  //   <Route>
+  //     {...rest}
+  //     render={props =>
+  //       isAuthenticated() ? (
+  //         <Component {...props} />
+  //       ) : (
+  //         <Redirect to={{ pathname="/", state: {from: props.location}}} />
+  //       )
+  //     }
+  //     />
+  //   )
+  //   </Route>
+  // )
+
   return (
     <Router>
       <div className="App">
