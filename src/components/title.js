@@ -3,9 +3,9 @@ import React from 'react';
 function Title(props) {
     return(
         <div>
-            <h2>
+            <h4>
                 {props.title}
-            </h2>
+            </h4>
         </div>
     )
 }

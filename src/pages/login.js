@@ -35,7 +35,7 @@ class Login extends React.Component {
     loginUser = () => {
         this.props.signInWithEmailAndPassword(this.state.email, this.state.senha)
             .then((resp) => {
-                if(resp.code !== 'auth/invalid-email'){
+                if(resp) {
                     let userId = firebaseAppAuth.currentUser.uid;
                     database.ref('/users/' + userId).once('value')
                     this.props.history.push("/home")

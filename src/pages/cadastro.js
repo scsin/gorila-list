@@ -19,10 +19,10 @@ class Cadastro extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            nome: "",
+            name: "",
             email:"",
-            senha: "",
-            list: [],
+            password: "",
+            list: [false],
         }
     }
 
@@ -34,9 +34,9 @@ class Cadastro extends React.Component {
 
     handleClick = () => {
         const infos = {
-            nome: this.state.nome,
+            name: this.state.name,
             email: this.state.email,
-            senha: this.state.senha,
+            password: this.state.password,
             list: this.state.list,
         }
         this.createUser(infos);
@@ -44,11 +44,22 @@ class Cadastro extends React.Component {
 
     createUser = (infos) => {
         firebaseAppAuth.createUserWithEmailAndPassword(this.state.email,
-            this.state.senha)
+            this.state.password)
             .then((resp) => {
-                this.props.history.push('/home')
                 if(resp){
                     database.ref('/users/' + resp.user.uid).set(infos);
+                    this.loginUser();
+                }
+            })
+    }
+
+    loginUser = () => {
+        this.props.signInWithEmailAndPassword(this.state.email, this.state.password)
+            .then((resp) => {
+                if(resp) {
+                    let userId = firebaseAppAuth.currentUser.uid;
+                    database.ref('/users/' + userId).once('value')
+                    this.props.history.push('/home')
                 }
             })
     }
@@ -62,9 +73,9 @@ class Cadastro extends React.Component {
             <Router>
                 <div className="cadastro">
                     <Logo />
-                    <Input getValue={(e) => this.handleChange((e), 'nome')} type="text" name="Nome" />
+                    <Input getValue={(e) => this.handleChange((e), 'name')} type="text" name="Nome" />
                     <Input getValue={(e) => this.handleChange((e), 'email')} type="text" name="Email" />
-                    <Input getValue={(e) => this.handleChange((e), 'senha')} type="password" name="Senha" />
+                    <Input getValue={(e) => this.handleChange((e), 'password')} type="password" name="Senha" />
                     <Button style={{backgroundColor: "#69306D", fontWeight: 500}} onClick={this.handleClick} name="CADASTRAR" />
                     <Anchor style={{backgroundColor:"transparent", color: "#00695c", border: "none", boxShadow: "none", fontWeight: 700}} onClick={this.Redirect} name="CANCELAR" />
                 </div>
