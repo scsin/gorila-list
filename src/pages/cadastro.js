@@ -1,8 +1,6 @@
 import React from 'react';
+import firebase from 'firebase';
 
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
 import withFirebaseAuth from 'react-with-firebase-auth';
 
 import {BrowserRouter as Router} from 'react-router-dom';

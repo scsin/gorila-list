@@ -1,8 +1,6 @@
 import React from 'react';
+import firebase from 'firebase';
 
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
 import withFirebaseAuth from 'react-with-firebase-auth';
 import firebaseConfig from '../firebaseConfig/firebaseConfig'
 
@@ -39,8 +37,6 @@ class Login extends React.Component {
                     let userId = firebaseAppAuth.currentUser.uid;
                     database.ref('/users/' + userId).once('value')
                     this.props.history.push("/home")
-                } else {
-                    alert('Coloque seu email e senha')
                 }
             })
             .catch(error => {

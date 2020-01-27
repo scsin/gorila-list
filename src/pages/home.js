@@ -1,8 +1,6 @@
 import React from 'react';
+import firebase from 'firebase';
 
-import * as firebase from "firebase/app";
-import "firebase/auth";
-import "firebase/database";
 import withFirebaseAuth from 'react-with-firebase-auth';
 
 import {BrowserRouter as Router} from 'react-router-dom';
@@ -83,7 +81,6 @@ class Home extends React.Component {
                     <Button onClick={this.handleClick} name="ADICIONAR" />
                     {this.state.listDB.map((item, index) => {
                         if(index !== 0) {
-                            console.log(item, index, this.state.listDB)
                             return (
                                 <div className="List">
                                     <Checkbox key={index} item={item}></Checkbox>
