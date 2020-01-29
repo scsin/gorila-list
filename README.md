@@ -1,6 +1,6 @@
 # GORILA LIST
 
-[PROJETO](link)
+[PROJETO](https://gorila-list.herokuapp.com/)
 
 ## 1. Resumo do projeto
 
